@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Model Directory: Specs, Pricing and History for Every AI Model</title>
+<meta name="description" content="AI Model Directory is a sourced, versioned reference for AI models: specs, context windows, API pricing by provider, release history and open-weight details, with every fact cited and dated.">
+<meta property="og:title" content="AI Model Directory: Specs, Pricing and History for Every AI Model">
+<meta property="og:description" content="Every AI model, with sourced specs and live API pricing.">
+<meta property="og:image" content="https://www.aimodel.directory/opengraph-image">
+<meta property="og:url" content="https://robheat.github.io/aimodeldirectory-landing/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://www.aimodel.directory/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --surface: #ffffff;
+    --border: rgba(22,24,29,0.11);
+    --text: #16181d;
+    --text-muted: #4a4f59;
+    --text-faint: #6b717d;
+    --accent: #1f5f8b;
+    --accent-hover: #174a6e;
+    --accent-soft: rgba(125,183,224,0.16);
+    --ink: #16181d;
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { color-scheme: light; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  a { color: inherit; }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    height: 68px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .brand {
+    font-weight: 600;
+    font-size: 1.08rem;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+
+  .brand span { color: var(--accent); }
+
+  .nav-cta, .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    background: var(--ink);
+    color: var(--bg);
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: transform 0.15s cubic-bezier(0.16,1,0.3,1), background 0.15s;
+  }
+
+  .nav-cta { font-size: 0.88rem; padding: 9px 16px; }
+  .cta-primary { font-size: 0.98rem; padding: 14px 24px; }
+
+  .nav-cta:hover, .cta-primary:hover { background: var(--accent); }
+  .cta-primary:hover { transform: translateY(-1px); }
+  .nav-cta:active, .cta-primary:active { transform: scale(0.98); }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+    padding: 72px 0 88px;
+  }
+
+  .byline {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    margin: 0 0 18px;
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 4.4vw, 3.4rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin: 0 0 20px;
+    font-weight: 600;
+  }
+
+  h1 em { font-style: normal; color: var(--accent); }
+
+  .hero-sub {
+    font-size: 1.08rem;
+    color: var(--text-muted);
+    max-width: 46ch;
+    margin: 0 0 30px;
+  }
+
+  .hero-art {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 30px 70px -34px rgba(31,95,139,0.5);
+    aspect-ratio: 1200 / 630;
+    background: #16181d;
+  }
+
+  .hero-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  section { padding: 64px 0; border-top: 1px solid var(--border); }
+
+  .section-head { max-width: 60ch; margin: 0 0 36px; }
+
+  h2 {
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    letter-spacing: -0.02em;
+    margin: 0 0 14px;
+    font-weight: 600;
+  }
+
+  .section-head p { color: var(--text-muted); margin: 0; }
+
+  .pills { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .pill {
+    font-size: 0.92rem;
+    color: var(--text);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 9px 18px;
+    border-radius: 999px;
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .pill:hover { border-color: var(--accent); color: var(--accent); }
+
+  .pill.more { color: var(--accent); font-weight: 600; background: transparent; }
+
+  .bento {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 16px;
+  }
+
+  .bento-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+
+  .bento-card.wide {
+    grid-row: 1 / 3;
+    background: linear-gradient(160deg, var(--accent-soft), var(--surface) 65%);
+  }
+
+  .bento-card h3 { font-size: 1.15rem; margin: 0 0 10px; letter-spacing: -0.01em; font-weight: 600; }
+
+  .bento-card p { color: var(--text-muted); font-size: 0.95rem; margin: 0 0 10px; line-height: 1.6; }
+
+  .stat {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 2.4rem;
+    font-weight: 500;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .inline-links { margin-top: 14px; line-height: 1.9; font-size: 0.93rem; }
+
+  .inline-links a, .link-list a, .card-more {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .inline-links a:hover, .link-list a:hover, .card-more:hover { text-decoration: underline; }
+
+  .inline-links .sep { color: var(--text-faint); margin: 0 6px; }
+
+  .card-more { display: inline-block; margin-top: 14px; font-size: 0.92rem; }
+
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+
+  .columns h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 6px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .link-list { list-style: none; margin: 0; padding: 0; }
+
+  .link-list li { padding: 12px 0; }
+
+  .link-list a { font-size: 0.98rem; }
+
+  .link-list span { display: block; color: var(--text-muted); font-size: 0.9rem; margin-top: 2px; }
+
+  footer { border-top: 1px solid var(--border); padding: 40px 0; }
+
+  .footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-row p { color: var(--text-faint); font-size: 0.85rem; margin: 0; max-width: 60ch; }
+
+  .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+
+  .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; }
+  .footer-links a:hover { color: var(--accent); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-cta, .cta-primary, .pill { transition: none; }
+  }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; gap: 36px; padding: 44px 0 56px; }
+    .bento { grid-template-columns: 1fr; }
+    .bento-card.wide { grid-row: auto; }
+    .columns { grid-template-columns: 1fr; gap: 32px; }
+    nav { height: 60px; }
+  }
+
+  @media (max-width: 420px) {
+    .nav-cta { font-size: 0.8rem; padding: 8px 12px; }
+    .brand { font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav>
+    <a class="brand" href="#top">aimodel<span>.directory</span></a>
+    <a class="nav-cta" href="https://www.aimodel.directory/" target="_blank" rel="noopener">Browse models</a>
+  </nav>
+</div>
+
+<div class="wrap">
+  <div class="hero" id="top">
+    <div>
+      <p class="byline">Every figure cited and dated · open data</p>
+      <h1>Every AI model, with <em>sourced</em> specs.</h1>
+      <p class="hero-sub">A reference for AI models: context windows, API pricing by provider, open-weight details and change history.</p>
+      <a class="cta-primary" href="https://www.aimodel.directory/" target="_blank" rel="noopener">Browse models →</a>
+    </div>
+    <div class="hero-art">
+      <img src="https://www.aimodel.directory/opengraph-image" alt="aimodel.directory: every AI model, with sourced specs and live API pricing" width="1200" height="630">
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="section-head">
+      <h2>Browse by lab.</h2>
+      <p>Each lab has its own page listing the models it has released, with the same fields for every one.</p>
+    </div>
+    <div class="pills">
+      <a class="pill" href="https://www.aimodel.directory/labs/openai" target="_blank" rel="noopener">OpenAI</a>
+      <a class="pill" href="https://www.aimodel.directory/labs/anthropic" target="_blank" rel="noopener">Anthropic</a>
+      <a class="pill" href="https://www.aimodel.directory/labs/google" target="_blank" rel="noopener">Google DeepMind</a>
+      <a class="pill" href="https://www.aimodel.directory/labs/meta" target="_blank" rel="noopener">Meta</a>
+      <a class="pill" href="https://www.aimodel.directory/labs/alibaba" target="_blank" rel="noopener">Alibaba (Qwen)</a>
+      <a class="pill" href="https://www.aimodel.directory/labs/deepseek" target="_blank" rel="noopener">DeepSeek</a>
+      <a class="pill" href="https://www.aimodel.directory/labs/mistral" target="_blank" rel="noopener">Mistral AI</a>
+      <a class="pill" href="https://www.aimodel.directory/labs/nvidia" target="_blank" rel="noopener">NVIDIA</a>
+      <a class="pill" href="https://www.aimodel.directory/labs/xai" target="_blank" rel="noopener">xAI</a>
+      <a class="pill more" href="https://www.aimodel.directory/labs" target="_blank" rel="noopener">All labs →</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Specs, prices, and what changed.</h2>
+      <p>The same record for every model, kept current, with the history preserved.</p>
+    </div>
+    <div class="bento">
+      <div class="bento-card wide">
+        <span class="stat">600+</span>
+        <h3>A page for every model</h3>
+        <p>Each model has its own page with its context window, release date, API pricing by provider, and whether its weights are open, all linked to the source and the date it was last checked.</p>
+        <div class="inline-links">
+          <a href="https://www.aimodel.directory/models/gemini-4-argon" target="_blank" rel="noopener">Gemini 4 Argon</a><span class="sep">/</span><a href="https://www.aimodel.directory/models/deepseek-v4-pro" target="_blank" rel="noopener">DeepSeek V4 Pro</a><span class="sep">/</span><a href="https://www.aimodel.directory/models/kimi-k3" target="_blank" rel="noopener">Kimi K3</a><span class="sep">/</span><a href="https://www.aimodel.directory/models/qwen3-5-27b" target="_blank" rel="noopener">Qwen3.5 27B</a>
+        </div>
+        <a class="card-more" href="https://www.aimodel.directory/models" target="_blank" rel="noopener">All models →</a>
+      </div>
+      <div class="bento-card">
+        <h3>Prices by provider</h3>
+        <p>The same model can cost very different amounts depending on who serves it, so pricing is listed per provider.</p>
+        <a class="card-more" href="https://www.aimodel.directory/providers" target="_blank" rel="noopener">All providers →</a>
+      </div>
+      <div class="bento-card">
+        <h3>A changelog you can subscribe to</h3>
+        <p>New releases, price changes and corrections are logged, and the log is available as a feed.</p>
+        <div class="inline-links">
+          <a href="https://www.aimodel.directory/changelog" target="_blank" rel="noopener">Changelog</a><span class="sep">/</span><a href="https://www.aimodel.directory/changelog/feed.xml" target="_blank" rel="noopener">RSS feed</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Find a model, then check the facts.</h2>
+      <p>Look up what runs on your own hardware, and see exactly how the data is gathered and corrected.</p>
+    </div>
+    <div class="columns">
+      <div>
+        <h3>Explore</h3>
+        <ul class="link-list">
+          <li><a href="https://www.aimodel.directory/tools/can-i-run-it" target="_blank" rel="noopener">Can I run it?</a><span>Pick your processor, RAM and graphics card to see which open-weight models fit.</span></li>
+          <li><a href="https://www.aimodel.directory/models" target="_blank" rel="noopener">All models</a><span>The full directory.</span></li>
+          <li><a href="https://www.aimodel.directory/labs" target="_blank" rel="noopener">All labs</a><span>Who makes the models.</span></li>
+          <li><a href="https://www.aimodel.directory/providers" target="_blank" rel="noopener">All providers</a><span>Who serves them, and at what price.</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Trust and method</h3>
+        <ul class="link-list">
+          <li><a href="https://www.aimodel.directory/methodology" target="_blank" rel="noopener">Methodology</a><span>How each figure is gathered and verified.</span></li>
+          <li><a href="https://www.aimodel.directory/sources" target="_blank" rel="noopener">Sources</a><span>Where the data comes from.</span></li>
+          <li><a href="https://www.aimodel.directory/editorial-policy" target="_blank" rel="noopener">Editorial policy</a><span>The rules the directory follows.</span></li>
+          <li><a href="https://www.aimodel.directory/corrections" target="_blank" rel="noopener">Corrections</a><span>Errors found and fixed, in the open.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap footer-row">
+    <p>Data is published under CC BY 4.0. Figures can change, so check the source on each model page.</p>
+    <div class="footer-links">
+      <a href="https://www.aimodel.directory/" target="_blank" rel="noopener">aimodel.directory</a>
+      <a href="https://www.ainformed.dev/" target="_blank" rel="noopener">Also: AInformed</a>
+      <a href="https://www.aipcs.store/" target="_blank" rel="noopener">Also: AIPCs</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
